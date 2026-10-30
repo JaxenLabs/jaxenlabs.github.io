@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/*
+ * Colour tokens. Same calm palette as the apps: soft charcoal in dark mode,
+ * one teal accent. Light and dark follow the visitor's system setting.
+ */
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --text: #16191d;
+  --muted: #5c6672;
+  --border: #e3e6ea;
+  --accent: #2a9d8f;
+  --accent-soft: rgb(42 157 143 / 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121418;
+    --surface: #1b1e23;
+    --text: #e6e8eb;
+    --muted: #98a1ac;
+    --border: #2a2f36;
+    --accent: #3cb4a5;
+    --accent-soft: rgb(60 180 165 / 0.14);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
