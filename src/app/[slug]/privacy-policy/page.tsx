@@ -13,7 +13,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const app = getApp((await params).slug);
-  return app ? { title: `${app.name} Privacy Policy`, description: app.privacy.intro } : {};
+  return app ? { title: `${app.name} Privacy Policy`, description: app.privacy.intro ?? app.tagline } : {};
 }
 
 /** `/<slug>/privacy-policy/`. */

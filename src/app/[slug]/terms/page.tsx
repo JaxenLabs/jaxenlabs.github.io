@@ -8,17 +8,19 @@ type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return apps.map((app) => ({ slug: app.slug }));
+  return apps.filter((app) => app.terms).map((app) => ({ slug: app.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const app = getApp((await params).slug);
-  return app ? { title: `${app.name} Terms & Conditions`, description: app.terms.intro } : {};
+  return app?.terms
+    ? { title: `${app.name} Terms & Conditions`, description: app.terms.intro ?? app.tagline }
+    : {};
 }
 
 /** `/<slug>/terms/`. */
 export default async function TermsPage({ params }: Props) {
   const app = getApp((await params).slug);
-  if (!app) notFound();
+  if (!app?.terms) notFound();
   return <LegalDocumentView app={app} doc={app.terms} />;
 }

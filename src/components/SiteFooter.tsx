@@ -1,39 +1,60 @@
+import Image from "next/image";
 import Link from "next/link";
 import { apps } from "@/content/apps";
 import { site } from "@/content/site";
+import { FacebookIcon } from "./FacebookLink";
+import { LogoMark } from "./LogoMark";
 
 /** Footer with every app's legal links, so they are one click from any page. */
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-border">
-      <div className="mx-auto grid max-w-5xl gap-8 px-4 py-10 text-sm sm:grid-cols-2 sm:px-6">
+    <footer className="relative mt-24">
+      <div className="h-px bg-linear-to-r from-transparent via-accent/50 to-transparent" />
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_2fr]">
         <div>
-          <p className="font-semibold">{site.name}</p>
-          <p className="mt-1 text-muted">{site.tagline}</p>
-          <a href={`mailto:${site.contactEmail}`} className="mt-3 inline-block text-accent hover:underline">
-            {site.contactEmail}
-          </a>
+          <Link href="/" className="flex items-center gap-2.5 font-display text-xl font-semibold tracking-tight">
+            <LogoMark className="size-9" />
+            {site.name}
+          </Link>
+          <p className="mt-3 max-w-xs text-sm text-muted">{site.tagline}</p>
+          <div className="mt-5 flex flex-col gap-2 text-sm">
+            <a href={`mailto:${site.contactEmail}`} className="w-fit text-accent hover:underline">
+              {site.contactEmail}
+            </a>
+            <a
+              href={site.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-fit items-center gap-2 text-muted transition-colors hover:text-text"
+            >
+              <FacebookIcon className="size-4" />
+              Follow us on Facebook
+            </a>
+          </div>
         </div>
-        <ul className="grid gap-4 sm:justify-end">
+        <ul className="grid gap-8 sm:grid-cols-3">
           {apps.map((app) => (
             <li key={app.slug}>
-              <Link href={`/${app.slug}/`} className="font-medium hover:text-accent">
-                {app.name}
+              <Link href={`/${app.slug}/`} className="group inline-flex items-center gap-2.5 font-medium">
+                <Image src={app.iconSrc} alt="" width={28} height={28} className="size-7 rounded-lg" />
+                <span className="transition-colors group-hover:text-accent">{app.name}</span>
               </Link>
-              <div className="mt-1 flex gap-4 text-muted">
-                <Link href={`/${app.slug}/privacy-policy/`} className="hover:text-text">
+              <div className="mt-3 flex flex-col gap-2 text-sm text-muted">
+                <Link href={`/${app.slug}/privacy-policy/`} className="w-fit transition-colors hover:text-text">
                   Privacy Policy
                 </Link>
-                <Link href={`/${app.slug}/terms/`} className="hover:text-text">
-                  Terms
-                </Link>
+                {app.terms && (
+                  <Link href={`/${app.slug}/terms/`} className="w-fit transition-colors hover:text-text">
+                    Terms
+                  </Link>
+                )}
               </div>
             </li>
           ))}
         </ul>
       </div>
-      <p className="pb-8 text-center text-xs text-muted">
-        © {new Date().getFullYear()} {site.name}
+      <p className="border-t border-border py-6 text-center text-xs text-muted">
+        © {new Date().getFullYear()} {site.name}. Made with care.
       </p>
     </footer>
   );

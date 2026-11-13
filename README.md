@@ -11,6 +11,11 @@ and hosted free on GitHub Pages at **https://jaxenlabs.github.io**.
 | `/jaxbudget/` | JaxBudget home page |
 | `/jaxbudget/privacy-policy/` | JaxBudget Privacy Policy |
 | `/jaxbudget/terms/` | JaxBudget Terms & Conditions |
+| `/jaxscan/` | JaxScan home page |
+| `/jaxscan/privacy-policy/` | JaxScan Privacy Policy |
+| `/jaxscan/terms/` | JaxScan Terms & Conditions |
+| `/smartummah/` | SmartUmmah home page |
+| `/smartummah/privacy-policy/` | SmartUmmah Privacy Policy (the app has no Terms) |
 
 ## Run locally
 

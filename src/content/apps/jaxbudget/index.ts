@@ -14,26 +14,32 @@ export const jaxbudget: AppInfo = {
   features: [
     {
       title: "Offline first",
+      icon: "offline",
       text: "Everything is stored in a private database on your device. No account and no servers.",
     },
     {
       title: "Budgets and insights",
+      icon: "chart",
       text: "Monthly and category budgets with clear warnings before you overspend.",
     },
     {
       title: "Subscriptions",
+      icon: "repeat",
       text: "Track renewals and get local reminders before you are charged.",
     },
     {
       title: "Camera and Voice Scan",
+      icon: "scan",
       text: "Read receipts on the device with ML Kit, or just say what you spent.",
     },
     {
       title: "Backup your way",
+      icon: "cloud",
       text: "Save a backup file anywhere, or to a private folder in your own Google Drive.",
     },
     {
       title: "App lock",
+      icon: "lock",
       text: "Protect the app with your fingerprint, face, PIN or pattern.",
     },
   ],

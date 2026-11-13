@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Space_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -7,6 +7,7 @@ import { site } from "@/content/site";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -14,11 +15,16 @@ export const metadata: Metadata = {
   description: site.description,
 };
 
-/** Shell shared by every page: header, content, footer. */
+export const viewport: Viewport = {
+  themeColor: "#05080d",
+};
+
+/** Shell shared by every page: aurora backdrop, header, content, footer. */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="flex min-h-dvh flex-col font-sans">
+    <html lang="en" className={`${inter.variable} ${grotesk.variable}`}>
+      <body className="relative flex min-h-dvh flex-col overflow-x-clip font-sans">
+        <div className="aurora" aria-hidden />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

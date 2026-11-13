@@ -24,15 +24,40 @@ export interface LegalDocument {
   title: string;
   /** Date the current wording took effect, e.g. "29 October 2026". */
   effectiveDate: string;
-  /** Opening paragraph before the numbered sections. */
-  intro: string;
+  /** Label shown before the date, as the app words it. Defaults to "Effective date". */
+  dateLabel?: string;
+  /** Opening paragraph before the sections, if the document has one. */
+  intro?: string;
   sections: LegalSection[];
 }
+
+/** Names of the line icons in `components/Icon.tsx`. */
+export type IconName =
+  | "offline"
+  | "chart"
+  | "repeat"
+  | "scan"
+  | "cloud"
+  | "lock"
+  | "device"
+  | "spark"
+  | "noads"
+  | "doc"
+  | "text"
+  | "qr"
+  | "sign"
+  | "book"
+  | "compass"
+  | "calendar"
+  | "counter"
+  | "clock"
+  | "heart";
 
 /** A short feature card on an app's home page. */
 export interface AppFeature {
   title: string;
   text: string;
+  icon: IconName;
 }
 
 /** Everything the site knows about one app. Add a new app by adding one of these. */
@@ -55,11 +80,15 @@ export interface AppInfo {
    */
   googleDataUse?: { title: string; paragraphs: string[] };
   privacy: LegalDocument;
-  terms: LegalDocument;
+  /** Terms, if the app has them. Without them there is no `/<slug>/terms/` page. */
+  terms?: LegalDocument;
 }
 
 /** Shorthand for a paragraph block. */
 export const p = (text: string): LegalBlock => ({ kind: "paragraph", text });
 
-/** Shorthand for a bulleted list block. */
+/**
+ * Shorthand for a bulleted list block. In items and paragraphs, `**text**`
+ * is shown in bold (used for labels such as "Location:").
+ */
 export const ul = (...items: string[]): LegalBlock => ({ kind: "bullets", items });

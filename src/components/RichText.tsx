@@ -3,11 +3,11 @@ import { Fragment } from "react";
 /** Matches web links and email addresses inside plain legal text. */
 const LINK_PATTERN = /(https?:\/\/[^\s),;]+|[\w.+-]+@[\w-]+\.[\w.]+\w)/g;
 
-/**
- * Renders plain text with its URLs and email addresses turned into links,
- * so content files can stay plain strings.
- */
-export function RichText({ text }: { text: string }) {
+/** Matches `**bold**` spans, used for labels such as "Location:". */
+const BOLD_PATTERN = /\*\*(.+?)\*\*/g;
+
+/** Plain text with its URLs and email addresses turned into links. */
+function Linked({ text }: { text: string }) {
   const parts = text.split(LINK_PATTERN);
   return (
     <>
@@ -21,6 +21,27 @@ export function RichText({ text }: { text: string }) {
           </a>
         );
       })}
+    </>
+  );
+}
+
+/**
+ * Renders plain text with `**bold**` spans, URLs and email addresses, so
+ * content files can stay plain strings.
+ */
+export function RichText({ text }: { text: string }) {
+  const parts = text.split(BOLD_PATTERN);
+  return (
+    <>
+      {parts.map((part, i) =>
+        i % 2 === 0 ? (
+          <Linked key={i} text={part} />
+        ) : (
+          <strong key={i} className="font-semibold text-text">
+            {part}
+          </strong>
+        ),
+      )}
     </>
   );
 }

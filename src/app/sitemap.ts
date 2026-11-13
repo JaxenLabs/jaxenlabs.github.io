@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const appPages = apps.flatMap((app) => [
     `/${app.slug}/`,
     `/${app.slug}/privacy-policy/`,
-    `/${app.slug}/terms/`,
+    ...(app.terms ? [`/${app.slug}/terms/`] : []),
   ]);
   return ["/", ...appPages].map((path) => ({ url: `${site.url}${path}` }));
 }

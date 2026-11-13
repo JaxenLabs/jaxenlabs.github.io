@@ -6,4 +6,5 @@ export const site = {
   description:
     "JaxenLabs builds calm, privacy-first mobile apps that keep your data on your device.",
   contactEmail: "jaxenlabs.dev@gmail.com",
+  facebookUrl: "https://www.facebook.com/profile.php?id=61594146698206",
 } as const;
