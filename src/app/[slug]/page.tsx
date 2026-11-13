@@ -71,7 +71,7 @@ export default async function AppPage({ params }: Props) {
             <span className="text-gradient">{app.name}</span>
           </h1>
           <p className="mt-3 text-sm font-medium tracking-wide text-muted">
-            {app.store.title} · <span className="text-text">{app.downloads}</span> downloads on Google Play
+            {app.store.title} · on Google Play
           </p>
           <p className="mt-4 font-display text-xl text-text sm:text-2xl">{app.tagline}</p>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{app.description}</p>
