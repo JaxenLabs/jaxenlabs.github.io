@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { AppInfo, LegalDocument } from "@/content/types";
+import { JsonLd } from "./JsonLd";
+import { LegalToc } from "./LegalToc";
 import { RichText } from "./RichText";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 /** Turns "2. Camera, photos and voice" into the anchor id "camera-photos-and-voice". */
 function sectionId(heading: string): string {
@@ -24,6 +27,15 @@ export function LegalDocumentView({ app, doc }: { app: AppInfo; doc: LegalDocume
 
   return (
     <div className="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          ...breadcrumbJsonLd([
+            { name: app.name, path: `/${app.slug}/` },
+            { name: doc.title, path: doc === app.privacy ? `/${app.slug}/privacy-policy/` : `/${app.slug}/terms/` },
+          ]),
+        }}
+      />
       <header className="relative animate-rise overflow-hidden rounded-3xl border border-border bg-surface p-6 backdrop-blur sm:p-10">
         <div className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-accent/15 blur-3xl" />
         <Link
@@ -44,18 +56,7 @@ export function LegalDocumentView({ app, doc }: { app: AppInfo; doc: LegalDocume
         <nav aria-label="Contents" className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-2xl border border-border bg-surface p-5 backdrop-blur">
             <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">Contents</p>
-            <ol className="mt-4 grid gap-1 text-sm">
-              {doc.sections.map((s) => (
-                <li key={s.heading}>
-                  <a
-                    href={`#${sectionId(s.heading)}`}
-                    className="block rounded-lg px-2 py-1.5 text-muted transition-colors hover:bg-accent-soft hover:text-accent"
-                  >
-                    {s.heading}
-                  </a>
-                </li>
-              ))}
-            </ol>
+            <LegalToc items={doc.sections.map((s) => ({ id: sectionId(s.heading), heading: s.heading }))} />
           </div>
           {otherDoc && (
             <Link

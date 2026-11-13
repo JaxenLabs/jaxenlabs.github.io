@@ -11,6 +11,8 @@ export const jaxscan: AppInfo = {
     "JaxScan is a private document scanner and PDF scanner app that keeps every scan on your phone. Scan documents to PDF in seconds, extract text with offline OCR, sign and edit PDFs, and scan QR codes — with no account, no sign-up, no ads and no cloud upload.",
   iconSrc: "/jaxscan/icon.png",
   playStoreUrl: "https://play.google.com/store/apps/details?id=com.jaxenlabs.scanai",
+  category: "BusinessApplication",
+  keywords: ["document scanner", "PDF scanner", "offline OCR", "scan to PDF", "QR code scanner", "private scanner app"],
   features: [
     {
       title: "Private and secure",

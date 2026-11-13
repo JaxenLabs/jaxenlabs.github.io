@@ -73,6 +73,10 @@ export interface AppInfo {
   iconSrc: string;
   /** Store link, if the app is live. */
   playStoreUrl?: string;
+  /** schema.org application category, e.g. "FinanceApplication". */
+  category: string;
+  /** Extra search words for this app's pages. */
+  keywords: string[];
   features: AppFeature[];
   /**
    * Why the app asks for Google user data (shown on the app home page).

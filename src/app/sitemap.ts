@@ -6,10 +6,20 @@ export const dynamic = "force-static";
 
 /** `/sitemap.xml`, listing every page so search engines find them. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const appPages = apps.flatMap((app) => [
-    `/${app.slug}/`,
-    `/${app.slug}/privacy-policy/`,
-    ...(app.terms ? [`/${app.slug}/terms/`] : []),
-  ]);
-  return ["/", ...appPages].map((path) => ({ url: `${site.url}${path}` }));
+  const now = new Date();
+  const page = (path: string, priority: number): MetadataRoute.Sitemap[number] => ({
+    url: `${site.url}${path}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority,
+  });
+  return [
+    page("/", 1),
+    ...apps.flatMap((app) => [
+      page(`/${app.slug}/`, 0.9),
+      page(`/${app.slug}/privacy-policy/`, 0.6),
+      ...(app.terms ? [page(`/${app.slug}/terms/`, 0.5)] : []),
+    ]),
+    page("/contact/", 0.5),
+  ];
 }

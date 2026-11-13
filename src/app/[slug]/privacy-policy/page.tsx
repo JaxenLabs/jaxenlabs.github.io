@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LegalDocumentView } from "@/components/LegalDocumentView";
 import { apps, getApp } from "@/content/apps";
+import { pageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -13,7 +14,13 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const app = getApp((await params).slug);
-  return app ? { title: `${app.name} Privacy Policy`, description: app.privacy.intro ?? app.tagline } : {};
+  if (!app) return {};
+  return pageMetadata({
+    title: `${app.name} Privacy Policy`,
+    description: app.privacy.intro ?? `How ${app.name} handles your data. ${app.tagline}`,
+    path: `/${app.slug}/privacy-policy/`,
+    image: app.iconSrc,
+  });
 }
 
 /** `/<slug>/privacy-policy/`. */

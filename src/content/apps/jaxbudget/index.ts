@@ -11,6 +11,8 @@ export const jaxbudget: AppInfo = {
     "JaxBudget is an offline-first personal finance app. Record expenses and income, set budgets, track subscriptions and get renewal reminders. No account, no ads, and your ledger never leaves your device unless you back it up yourself.",
   iconSrc: "/jaxbudget/icon.png",
   playStoreUrl: "https://play.google.com/store/apps/details?id=com.jaxenlabs.jaxbudget",
+  category: "FinanceApplication",
+  keywords: ["budget app", "expense tracker", "offline budget", "subscription tracker", "personal finance", "private money manager"],
   features: [
     {
       title: "Offline first",

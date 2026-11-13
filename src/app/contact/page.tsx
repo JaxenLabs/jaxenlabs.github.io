@@ -1,0 +1,61 @@
+import type { CSSProperties } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ContactCards } from "@/components/ContactCards";
+import { JsonLd } from "@/components/JsonLd";
+import { apps } from "@/content/apps";
+import { site } from "@/content/site";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Contact",
+  description: `Contact ${site.name} by email or on Facebook for app support, privacy questions and feedback.`,
+  path: "/contact/",
+});
+
+/** `/contact/`: email (with copy), Facebook, and each app's policies. */
+export default function ContactPage() {
+  return (
+    <div className="mx-auto max-w-6xl px-4 pt-14 sm:px-6 sm:pt-20">
+      <JsonLd data={{ "@context": "https://schema.org", ...breadcrumbJsonLd([{ name: "Contact", path: "/contact/" }]) }} />
+
+      <div className="animate-rise text-center">
+        <p className="text-sm font-semibold tracking-[0.2em] text-accent uppercase">Contact</p>
+        <h1 className="mt-4 font-display text-5xl font-bold tracking-tight sm:text-6xl">
+          Say <span className="text-gradient">hello.</span>
+        </h1>
+        <p className="mx-auto mt-5 max-w-lg text-lg text-muted">
+          Need help with an app, have a privacy question or an idea? We would love to hear from you.
+        </p>
+      </div>
+
+      <div className="mt-14">
+        <ContactCards />
+      </div>
+
+      <section className="mt-20">
+        <h2 data-reveal className="font-display text-2xl font-bold tracking-tight">App policies</h2>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          {apps.map((app, i) => (
+            <div key={app.slug} data-reveal style={{ "--delay": `${i * 100}ms` } as CSSProperties} className="glow-card p-5">
+              <Link href={`/${app.slug}/`} className="group flex items-center gap-3">
+                <Image src={app.iconSrc} alt="" width={48} height={48} className="size-12 rounded-xl transition-transform duration-300 group-hover:scale-110" />
+                <span className="font-display text-lg font-semibold transition-colors group-hover:text-accent">{app.name}</span>
+              </Link>
+              <div className="mt-4 flex flex-wrap gap-2 text-sm">
+                <Link href={`/${app.slug}/privacy-policy/`} className="btn-ghost rounded-xl px-3 py-1.5">
+                  Privacy Policy
+                </Link>
+                {app.terms && (
+                  <Link href={`/${app.slug}/terms/`} className="btn-ghost rounded-xl px-3 py-1.5">
+                    Terms
+                  </Link>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}

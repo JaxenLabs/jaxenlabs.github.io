@@ -18,7 +18,10 @@ export function SiteFooter() {
           </Link>
           <p className="mt-3 max-w-xs text-sm text-muted">{site.tagline}</p>
           <div className="mt-5 flex flex-col gap-2 text-sm">
-            <a href={`mailto:${site.contactEmail}`} className="w-fit text-accent hover:underline">
+            <Link href="/contact/" className="w-fit font-medium transition-colors hover:text-accent">
+              Contact us →
+            </Link>
+            <a href={`mailto:${site.contactEmail}`} className="w-fit break-all text-accent hover:underline">
               {site.contactEmail}
             </a>
             <a

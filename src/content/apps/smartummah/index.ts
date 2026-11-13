@@ -13,6 +13,8 @@ export const smartummah: AppInfo = {
     "SmartUmmah brings prayer times, the Qibla direction, the Hijri calendar, the Quran and daily adhkar together in one calm app, in English and Bangla. Prayer times are calculated on your phone, with no account and no ads.",
   iconSrc: "/smartummah/icon.png",
   playStoreUrl: "https://play.google.com/store/apps/details?id=com.jaxenlabs.smartummah",
+  category: "LifestyleApplication",
+  keywords: ["prayer times", "Qibla direction", "Hijri calendar", "Quran app", "dua and dhikr", "tasbeeh counter", "Bangla Islamic app"],
   features: [
     {
       title: "Prayer times",
