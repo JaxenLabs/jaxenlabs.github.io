@@ -8,6 +8,7 @@ import { Icon } from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
 import { StoreListingView } from "@/components/StoreListingView";
 import { apps, getApp } from "@/content/apps";
+import { site } from "@/content/site";
 import { appJsonLd, pageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -187,7 +188,7 @@ export default async function AppPage({ params }: Props) {
 
       {others.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pt-24 sm:px-6">
-          <h2 data-reveal className="font-display text-2xl font-bold tracking-tight">More from JaxenLabs</h2>
+          <h2 data-reveal className="font-display text-2xl font-bold tracking-tight">More from {site.name}</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {others.map((o, i) => (
               <Link

@@ -1,6 +1,6 @@
 /** Company-wide details used in the header, footer and metadata. */
 export const site = {
-  name: "JaxenLabs",
+  name: "Jaxen Labs",
   url: "https://jaxenlabs.github.io",
   tagline: "Reliable, scalable, innovative software.",
   description:

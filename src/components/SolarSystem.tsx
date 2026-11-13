@@ -40,7 +40,7 @@ export function SolarSystem({ apps }: { apps: AppInfo[] }) {
         <span className="absolute inset-[-6%] rounded-full bg-surface-strong shadow-[0_0_60px_-6px_rgb(34_211_238/0.6)] ring-1 ring-border backdrop-blur-xl" />
         <Image
           src="/logo.png"
-          alt="JaxenLabs logo"
+          alt="Jaxen Labs logo"
           width={200}
           height={200}
           priority

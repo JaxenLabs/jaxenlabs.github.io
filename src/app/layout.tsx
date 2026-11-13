@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   publisher: site.name,
   keywords: [
     site.name,
+    "JaxenLabs",
     "software company",
     "software engineering",
     "mobile app development",

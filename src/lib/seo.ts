@@ -55,6 +55,7 @@ export function organizationJsonLd() {
         "@type": "Organization",
         "@id": `${site.url}/#organization`,
         name: site.name,
+        alternateName: "JaxenLabs",
         url: `${site.url}/`,
         logo: `${site.url}/logo.png`,
         email: site.contactEmail,

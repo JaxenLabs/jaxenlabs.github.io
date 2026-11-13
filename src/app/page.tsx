@@ -184,7 +184,7 @@ export default function HomePage() {
           <div className="relative text-center">
             <h2 className="font-display text-3xl font-bold tracking-tight sm:text-5xl">Let&apos;s build something reliable.</h2>
             <p className="mx-auto mt-3 max-w-md text-muted">
-              Have a project, a question or an idea? Email us, or follow JaxenLabs on Facebook.
+              Have a project, a question or an idea? Email us, or follow Jaxen Labs on Facebook.
             </p>
           </div>
           <div className="relative mt-10 text-left">
