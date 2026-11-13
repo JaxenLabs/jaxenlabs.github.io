@@ -5,10 +5,21 @@ import { useEffect, useState } from "react";
 /**
  * The contents list beside a legal document. Highlights the section being
  * read, so long policies are easy to follow.
+ *
+ * "use client": this runs in the browser because it watches scrolling to
+ * know which section is on screen.
+ *
+ * Used by: src/components/LegalDocumentView.tsx
  */
 export function LegalToc({ items }: { items: { id: string; heading: string }[] }) {
+  // The id of the section currently being read; starts on the first one.
   const [active, setActive] = useState(items[0]?.id);
 
+  // An IntersectionObserver (a browser helper that reports when elements enter
+  // or leave the screen) watches every section. The rootMargin shrinks the
+  // "watch zone" to a band near the top of the screen (from 20% down to 35%
+  // down), so a section counts as "being read" when its top reaches that band.
+  // If several are in the band, the highest one wins.
   useEffect(() => {
     const sections = items
       .map((item) => document.getElementById(item.id))
@@ -37,6 +48,7 @@ export function LegalToc({ items }: { items: { id: string; heading: string }[] }
                 isActive ? "bg-accent-soft font-medium text-accent" : "text-muted hover:text-text"
               }`}
             >
+              {/* Small accent bar on the left that grows in for the active item */}
               <span
                 className={`absolute top-1/2 left-1.5 h-4 w-0.5 -translate-y-1/2 rounded bg-accent transition-transform duration-300 ${
                   isActive ? "scale-y-100" : "scale-y-0"

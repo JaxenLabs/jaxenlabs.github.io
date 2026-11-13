@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-/** The JaxenLabs logo mark (public/logo.png, transparent). */
+/**
+ * The Jaxen Labs logo mark (public/logo.png, transparent background). The
+ * `alt` is empty because it always sits next to the written company name, so
+ * screen readers would otherwise read the name twice.
+ *
+ * Used by: src/components/SiteHeader.tsx and src/components/SiteFooter.tsx
+ */
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <Image

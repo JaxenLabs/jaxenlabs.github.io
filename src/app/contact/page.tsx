@@ -7,21 +7,28 @@ import { apps } from "@/content/apps";
 import { site } from "@/content/site";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
+// The page's <title>, description and share-card tags (built by src/lib/seo.ts).
 export const metadata = pageMetadata({
   title: "Contact",
   description: `Contact ${site.name}, a software company, by email or on Facebook about projects, product support and privacy questions.`,
   path: "/contact/",
 });
 
-/** `/contact/`: email (with copy), Facebook, and each app's policies. */
+/**
+ * The contact page. Creates the page at `/contact/` (the folder name
+ * `contact` becomes the URL). Shows email (with a Copy button), Facebook, and
+ * links to each product's policies.
+ */
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-14 sm:px-6 sm:pt-20">
+    <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6 sm:pt-14 lg:pt-20">
+      {/* Breadcrumb structured data (JSON-LD) for search engines: Jaxen Labs > Contact */}
       <JsonLd data={{ "@context": "https://schema.org", ...breadcrumbJsonLd([{ name: "Contact", path: "/contact/" }]) }} />
 
+      {/* Hero heading */}
       <div className="animate-rise text-center">
         <p className="text-sm font-semibold tracking-[0.2em] text-accent uppercase">Contact</p>
-        <h1 className="mt-4 font-display text-5xl font-bold tracking-tight sm:text-6xl">
+        <h1 className="mt-3 font-display text-4xl font-bold tracking-tight sm:mt-4 sm:text-6xl">
           Say <span className="text-gradient">hello.</span>
         </h1>
         <p className="mx-auto mt-5 max-w-lg text-lg text-muted">
@@ -29,11 +36,14 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="mt-14">
-        <ContactCards />
+      {/* Email and Facebook cards */}
+      <div className="mt-8 sm:mt-14">
+        <ContactCards headingLevel={2} />
       </div>
 
-      <section className="mt-20">
+      {/* Product policies: one card per product that has a Privacy Policy.
+          `--delay` staggers their fade-in by 100ms each (see globals.css). */}
+      <section className="mt-12 sm:mt-20">
         <h2 data-reveal className="font-display text-2xl font-bold tracking-tight">Product policies</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {apps.filter((app) => app.privacy).map((app, i) => (

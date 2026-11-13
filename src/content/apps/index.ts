@@ -1,29 +1,46 @@
+/**
+ * THE PRODUCT LIST: every product shown on the site, in display order.
+ *
+ * The home page, header menu, footer, solar system, sitemap and product
+ * pages all read from `apps` below, so adding a product here is all it
+ * takes to put it everywhere. To add one, see "Add a product" in README.md.
+ *
+ * Each product's pages are created automatically from its `slug`:
+ *   /<slug>/                    always
+ *   /<slug>/privacy-policy/     only if it has `privacy`
+ *   /<slug>/terms/              only if it has `terms`
+ */
 import type { AppInfo } from "@/content/types";
 import { babyshop } from "./babyshop";
 import { jaxbudget } from "./jaxbudget";
 import { jaxscan } from "./jaxscan";
 import { smartummah } from "./smartummah";
 
-/**
- * Every app on the site, in display order. To add an app: create
- * `src/content/apps/<slug>/` like `jaxbudget/` and add it here. Its pages
- * (`/<slug>/`, plus `/<slug>/privacy-policy/` and `/<slug>/terms/` when it has
- * them) appear automatically.
- */
+/** All products, in the order they appear on the site. Baby Shop is first on purpose. */
 export const apps: AppInfo[] = [babyshop, jaxbudget, jaxscan, smartummah];
 
-/** Finds an app by its URL slug, or `undefined`. */
+/** Finds a product by its URL slug ("jaxscan"), or returns `undefined` if there is none. */
 export function getApp(slug: string): AppInfo | undefined {
   return apps.find((app) => app.slug === slug);
 }
 
-/** Turns a Google Play count such as "5K+" or "10+" into its lower bound (5000, 10). */
-function parseDownloads(count: string): number {
-  const m = count.match(/^([\d.,]+)\s*([KMB]?)/i);
-  if (!m) return 0;
-  const scale = { "": 1, K: 1_000, M: 1_000_000, B: 1_000_000_000 }[m[2].toUpperCase() as "" | "K" | "M" | "B"];
-  return Math.round(parseFloat(m[1].replace(/,/g, "")) * scale);
+const MULTIPLIERS = { "": 1, K: 1_000, M: 1_000_000, B: 1_000_000_000 } as const;
+
+/**
+ * Turns a Google Play download count into a number, using its lower bound:
+ * "10+" → 10, "5K+" → 5000, "1.5M+" → 1500000.
+ */
+function downloadsToNumber(count: string): number {
+  const match = count.match(/^([\d.,]+)\s*([KMB]?)/i);
+  if (!match) return 0;
+  const [, digits, suffix] = match;
+  const multiplier = MULTIPLIERS[suffix.toUpperCase() as keyof typeof MULTIPLIERS];
+  return Math.round(parseFloat(digits.replace(/,/g, "")) * multiplier);
 }
 
-/** Combined Google Play downloads across every product (sum of lower bounds), e.g. 5070. */
-export const totalDownloads = apps.reduce((sum, app) => sum + parseDownloads(app.downloads), 0);
+/**
+ * All products' Google Play downloads added together (e.g. 5070). Shown as
+ * "Total users" on the home page. The counts come from each product's
+ * `store.ts`, refreshed with `npm run update:play`.
+ */
+export const totalDownloads = apps.reduce((sum, app) => sum + downloadsToNumber(app.store.downloads), 0);

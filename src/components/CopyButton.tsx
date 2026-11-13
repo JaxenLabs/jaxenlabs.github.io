@@ -3,13 +3,21 @@
 import { useState } from "react";
 
 /**
- * Copies `text` to the clipboard and says so. Used next to email links,
- * because a `mailto:` link does nothing on computers with no mail app set up.
+ * A button that copies `text` to the clipboard and briefly shows "Copied!".
+ * Used next to email links, because a `mailto:` link does nothing on
+ * computers with no mail app set up.
+ *
+ * "use client": this runs in the browser because it reacts to clicks, keeps
+ * state (`copied`) and uses the browser's clipboard.
+ *
+ * Used by: src/components/ContactCards.tsx
  */
 export function CopyButton({ text, label = "Copy", className = "" }: { text: string; label?: string; className?: string }) {
+  // true for 2 seconds after a copy, to show the tick and "Copied!".
   const [copied, setCopied] = useState(false);
 
   async function copy() {
+    // Modern clipboard API first; it can fail on old browsers or non-HTTPS pages.
     try {
       await navigator.clipboard.writeText(text);
     } catch {
@@ -28,12 +36,14 @@ export function CopyButton({ text, label = "Copy", className = "" }: { text: str
   }
 
   return (
+    // aria-live lets screen readers announce the "Copied!" change.
     <button
       type="button"
       onClick={copy}
       aria-live="polite"
       className={`btn-ghost inline-flex cursor-pointer items-center justify-center gap-2 rounded-2xl px-5 font-medium ${className}`}
     >
+      {/* Tick icon after copying, otherwise the "two pages" copy icon */}
       {copied ? (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} className="size-4 animate-pop text-accent" aria-hidden>
           <path d="m5 12 5 5 9-10" strokeLinecap="round" strokeLinejoin="round" />

@@ -1,6 +1,11 @@
 import type { IconName } from "@/content/types";
 
-/** Line icons (24px grid, 1.75 stroke) for feature cards and highlights. */
+/**
+ * The drawing for each icon, as an SVG path on a 24x24 grid. The keys are the
+ * allowed icon names (the `IconName` type in src/content/types.ts), so content
+ * files can only ask for icons that exist. To add an icon, add its name to
+ * `IconName` and its path here.
+ */
 const PATHS: Record<IconName, string> = {
   offline: "M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Zm-3 9 2 2 4-4",
   chart: "M4 20V10m6 10V4m6 16v-7m4 7H2",
@@ -29,6 +34,13 @@ const PATHS: Record<IconName, string> = {
   pen: "m15 4 5 5L9 20H4v-5L15 4Zm-3 3 5 5",
 };
 
+/**
+ * A simple line icon (1.75 stroke) chosen by `name`. It uses `currentColor`,
+ * so it takes the text colour of its parent; `aria-hidden` because icons here
+ * are decoration next to text.
+ *
+ * Used by: home page, product pages, feature/tech marquees, ContactCards
+ */
 export function Icon({ name, className = "size-5" }: { name: IconName; className?: string }) {
   return (
     <svg

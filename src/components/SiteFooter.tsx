@@ -5,12 +5,23 @@ import { site } from "@/content/site";
 import { FacebookIcon } from "./FacebookLink";
 import { LogoMark } from "./LogoMark";
 
-/** Footer with every app's legal links, so they are one click from any page. */
+/**
+ * The footer at the bottom of every page: company name and contact links on
+ * the left, and every product with its legal links (Privacy Policy, Terms) on
+ * the right, so those are one click from any page.
+ *
+ *
+ * Desktop only: on phones and tablets the site works like an app, with no
+ * website footer; the same links live in the Contact tab and product pages.
+ * Used by: src/app/layout.tsx
+ */
 export function SiteFooter() {
   return (
-    <footer className="relative mt-24">
+    <footer className="relative mt-24 hidden lg:block">
+      {/* Thin glowing divider line */}
       <div className="h-px bg-linear-to-r from-transparent via-accent/50 to-transparent" />
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_2fr]">
+        {/* Left: logo, tagline and ways to get in touch */}
         <div>
           <Link href="/" className="flex items-center gap-2.5 font-display text-xl font-semibold tracking-tight">
             <LogoMark className="size-9" />
@@ -35,6 +46,8 @@ export function SiteFooter() {
             </a>
           </div>
         </div>
+        {/* Right: one column per product with the legal pages it has. Products
+            built for a client also get a "Client project" label. */}
         <ul className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {apps.map((app) => (
             <li key={app.slug}>
@@ -59,6 +72,7 @@ export function SiteFooter() {
           ))}
         </ul>
       </div>
+      {/* Copyright line. The year is fixed when the site is built, so a yearly rebuild keeps it current. */}
       <p className="border-t border-border py-6 text-center text-xs text-muted">
         © {new Date().getFullYear()} {site.name}. Made with care.
       </p>

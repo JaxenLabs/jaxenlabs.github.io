@@ -23,13 +23,20 @@ const PLACES = [
 ];
 
 /**
- * The home hero: the JaxenLabs logo fixed at the centre as the sun, with each
- * product fixed at its own point on its own ring. Products float and pulse
- * gently in place (staggered, so they move in rhythm), while small light dots
- * travel along the rings. Each product opens its page.
+ * The home hero picture: the Jaxen Labs logo fixed at the centre as the sun,
+ * with each product fixed at its own point on its own ring. Products float and
+ * pulse gently in place (staggered, so they move in rhythm), while small light
+ * dots travel along the rings. Each product opens its page.
+ *
+ * Built with plain CSS (no JavaScript), so it is a server component. The
+ * matching CSS classes (.orbit-ring, .planet-bob...) are in globals.css.
+ *
+ * Used by: src/app/page.tsx
  */
 export function SolarSystem({ apps }: { apps: AppInfo[] }) {
   return (
+    // `@container` lets children size themselves against this box (the
+    // `cqw` unit below = 1% of its width), so planets scale with the picture.
     <div className="solar @container relative mx-auto grid aspect-square w-full max-w-[30rem] place-items-center">
       {/* Sun glow */}
       <div className="absolute inset-[22%] animate-pulse-glow rounded-full bg-linear-135 from-accent/45 via-accent-2/40 to-accent-3/45 blur-3xl" />
@@ -48,7 +55,8 @@ export function SolarSystem({ apps }: { apps: AppInfo[] }) {
         />
       </div>
 
-      {/* Rings, each with a light dot travelling along it */}
+      {/* Rings, each with a light dot travelling along it. `--duration` (a CSS
+          variable) tells the .orbit-dot animation how many seconds one lap takes. */}
       {RINGS.map((ring) => (
         <div key={ring.inset} className="pointer-events-none absolute" style={{ inset: `${ring.inset}%` }}>
           <div className="absolute inset-0 rounded-full border border-border" />
@@ -58,9 +66,15 @@ export function SolarSystem({ apps }: { apps: AppInfo[] }) {
         </div>
       ))}
 
+      {/* The products ("planets"). Only as many as there are PLACES are shown. */}
       {apps.slice(0, PLACES.length).map((app, i) => {
         const place = PLACES[i];
+        // --start: the planet's angle on its ring. The ring wrapper is rotated by
+        // it, and .orbit-upright rotates back by the same amount so the icon
+        // isn't drawn tilted.
         const angle = { "--start": `${place.angle}deg` } as CSSProperties;
+        // --bob-delay: a negative delay starts each planet's float part-way
+        // through, so they don't all bob up and down together.
         const bob = { "--bob-delay": `${-place.bob}s` } as CSSProperties;
         return (
           <div key={app.slug} className="pointer-events-none absolute z-10" style={{ inset: `${RINGS[place.ring].inset}%` }}>
@@ -74,6 +88,7 @@ export function SolarSystem({ apps }: { apps: AppInfo[] }) {
                       aria-label={`Open ${app.name}`}
                       className="group/planet pointer-events-auto relative block"
                     >
+                      {/* Ring that pulses outward from the icon */}
                       <span aria-hidden className="planet-pulse absolute inset-0 rounded-[28%] ring-2 ring-accent-2/60" style={bob} />
                       <Image
                         src={app.iconSrc}
@@ -82,6 +97,7 @@ export function SolarSystem({ apps }: { apps: AppInfo[] }) {
                         height={120}
                         className="relative h-auto w-full rounded-[28%] shadow-[0_16px_40px_-12px_var(--shadow)] ring-1 ring-white/10 transition-transform duration-300 group-hover/planet:scale-115"
                       />
+                      {/* Name label that appears under the icon on hover */}
                       <span className="pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 translate-y-1 rounded-full border border-border bg-bg/90 px-3 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-lg backdrop-blur transition-all duration-300 group-hover/planet:translate-y-0 group-hover/planet:opacity-100">
                         {app.name} →
                       </span>

@@ -1,8 +1,15 @@
 import { Icon } from "./Icon";
 
-/** An endless strip of the tools we build with. Pauses on hover. */
+/**
+ * An endless, scrolling strip of the technologies we build with (names come
+ * from `techStack` in src/content/company). Pauses on hover.
+ *
+ * Used by: src/app/page.tsx
+ */
 export function TechMarquee({ items }: { items: string[] }) {
-  // Rendered twice so the -50% loop is seamless; the copy is hidden from screen readers.
+  // Rendered twice: the animation slides left by -50%, where the second copy
+  // takes the first one's place, so the loop is seamless. The copy is hidden
+  // from screen readers so names aren't read out twice.
   return (
     <div className="marquee-mask overflow-hidden py-2">
       <div className="flex w-max animate-marquee gap-3">

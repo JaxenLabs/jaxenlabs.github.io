@@ -1,6 +1,11 @@
 import { site } from "@/content/site";
 
-/** The Facebook "f" mark. */
+/**
+ * The Facebook "f" logo as an inline SVG. `fill="currentColor"` means it takes
+ * the text colour of whatever it sits in.
+ *
+ * Used by: FacebookLink below, ContactCards.tsx and SiteFooter.tsx
+ */
 export function FacebookIcon({ className = "size-5" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
@@ -9,7 +14,12 @@ export function FacebookIcon({ className = "size-5" }: { className?: string }) {
   );
 }
 
-/** Round icon button linking to the JaxenLabs Facebook page. */
+/**
+ * Small square icon button linking to the Jaxen Labs Facebook page (opens in
+ * a new tab). `noopener noreferrer` stops the new tab from controlling ours.
+ *
+ * Used by: src/components/SiteHeader.tsx
+ */
 export function FacebookLink({ className = "" }: { className?: string }) {
   return (
     <a

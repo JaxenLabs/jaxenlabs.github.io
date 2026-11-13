@@ -1,11 +1,29 @@
+/*
+ * Global styles for the whole site. Most styling is Tailwind classes written
+ * straight in the components; this file holds what classes can't do alone.
+ *
+ * Sections, in order:
+ *  1. Colour tokens   - CSS variables (--bg, --accent...) for dark and light mode.
+ *  2. @theme          - maps those tokens to Tailwind classes (bg-surface,
+ *                       text-muted, border-border...) plus fonts and animations.
+ *  3. Base styles     - html, body, text selection, keyboard focus ring.
+ *  4. Reusable classes - .text-gradient, .aurora, .glow-card, .btn-primary,
+ *                       .btn-ghost, scroll reveal, solar system, marquee.
+ *  5. Reduced motion  - turns animations off for visitors who ask for that.
+ */
+
+/* Loads Tailwind CSS (version 4: configured here in CSS, no tailwind.config file). */
 @import "tailwindcss";
 
 /*
- * Colour tokens, taken from the app icons: deep ink with a mint-to-cyan glow
- * in dark mode, airy mint-white in light mode. The theme follows the
+ * 1. Colour tokens, taken from the product icons: deep ink with a mint-to-cyan
+ * glow in dark mode, airy mint-white in light mode. The theme follows the
  * visitor's system setting until they pick one with the toggle, which sets
- * `data-theme` on <html> (see ThemeScript in layout.tsx).
+ * `data-theme` on <html> (see ThemeToggle.tsx, and THEME_SCRIPT in layout.tsx
+ * which re-applies it on the next visit).
  */
+
+/* Dark mode: the default, and also used when the visitor picks dark. */
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -23,9 +41,11 @@
   --card-from: rgb(255 255 255 / 0.06);
   --card-to: rgb(255 255 255 / 0.02);
   --shadow: rgb(0 0 0 / 0.6);
+  /* Strength of the background aurora glow (a plain number, used in .aurora). */
   --glow: 0.16;
 }
 
+/* Light mode, when the visitor picked it with the toggle. */
 :root[data-theme="light"] {
   color-scheme: light;
   --bg: #f4f8f7;
@@ -34,10 +54,10 @@
   --text: #0c1622;
   --muted: #566272;
   --border: rgb(12 22 34 / 0.1);
-  --accent: #0a9a6e;
-  --accent-2: #0891b2;
-  --accent-3: #2563eb;
-  --accent-soft: rgb(10 154 110 / 0.1);
+  --accent: #067352;
+  --accent-2: #0e7490;
+  --accent-3: #1d4ed8;
+  --accent-soft: rgb(6 115 82 / 0.1);
   --grid: rgb(12 22 34 / 0.05);
   --card-from: rgb(255 255 255 / 0.95);
   --card-to: rgb(255 255 255 / 0.6);
@@ -45,6 +65,11 @@
   --glow: 0.22;
 }
 
+/*
+ * Light mode again, for visitors whose system is set to light and who haven't
+ * picked dark. Same values as above: CSS can't share one block between a
+ * selector and a media query, so they are repeated (keep them in sync).
+ */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
@@ -54,10 +79,10 @@
     --text: #0c1622;
     --muted: #566272;
     --border: rgb(12 22 34 / 0.1);
-    --accent: #0a9a6e;
-    --accent-2: #0891b2;
-    --accent-3: #2563eb;
-    --accent-soft: rgb(10 154 110 / 0.1);
+    --accent: #067352;
+    --accent-2: #0e7490;
+    --accent-3: #1d4ed8;
+    --accent-soft: rgb(6 115 82 / 0.1);
     --grid: rgb(12 22 34 / 0.05);
     --card-from: rgb(255 255 255 / 0.95);
     --card-to: rgb(255 255 255 / 0.6);
@@ -66,6 +91,13 @@
   }
 }
 
+/*
+ * 2. Tailwind theme. Each `--color-x` here creates Tailwind classes such as
+ * bg-x, text-x and border-x (so `--color-muted` gives `text-muted`). They point
+ * at the tokens above, so switching theme recolours every class at once.
+ * `inline` makes the classes use var(--muted) directly, so the switch works.
+ * Each `--animate-x` creates an `animate-x` class (e.g. animate-float).
+ */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -77,9 +109,11 @@
   --color-accent-2: var(--accent-2);
   --color-accent-3: var(--accent-3);
   --color-accent-soft: var(--accent-soft);
+  /* Fonts: the variables come from next/font in layout.tsx; the rest are fallbacks. */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
+  /* Animations (name, length, easing, repeat). `spin` is built into Tailwind. */
   --animate-float: float 7s ease-in-out infinite;
   --animate-spin-slow: spin 28s linear infinite;
   --animate-spin-reverse: spin-reverse 40s linear infinite;
@@ -87,7 +121,10 @@
   --animate-pulse-glow: pulse-glow 6s ease-in-out infinite;
   --animate-marquee: marquee 40s linear infinite;
   --animate-pop: pop 0.25s cubic-bezier(0.2, 0.7, 0.2, 1.4) both;
+  --animate-fade: fade 0.25s ease both;
+  --animate-sheet: sheet 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 
+  /* The keyframes (the actual movement) for the animations above. */
   @keyframes float {
     0%, 100% { transform: translateY(0) rotate(-2deg); }
     50% { transform: translateY(-14px) rotate(2deg); }
@@ -110,12 +147,28 @@
     from { opacity: 0; transform: scale(0.96) translateY(-6px); }
     to { opacity: 1; transform: none; }
   }
+  /* Bottom sheet (BottomNav): backdrop fades in, the sheet slides up from the bottom. */
+  @keyframes fade {
+    from { opacity: 0; }
+  }
+  @keyframes sheet {
+    from { transform: translateY(100%); }
+  }
 }
 
+/*
+ * 3. Base styles.
+ * No sideways scrolling; smooth scrolling for #links; scroll-padding-top
+ * leaves room for the sticky header when jumping to a section.
+ */
 html {
   overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
+}
+/* Phones and tablets: the app bar is shorter, so #links need less room. */
+@media (max-width: 1023px) {
+  html { scroll-padding-top: 4.5rem; }
 }
 
 /* Large desktops and TVs: scale the whole rem-based layout up so it fills the screen. */
@@ -129,6 +182,7 @@ html {
   html { font-size: 187.5%; }
 }
 
+/* Page colours, fading smoothly when the theme changes. */
 body {
   background: var(--bg);
   color: var(--text);
@@ -136,17 +190,23 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+/* Highlight colour when text is selected. */
 ::selection {
   background: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
+/* Clear outline on whatever has keyboard focus (not shown for mouse clicks). */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 0.75rem;
 }
 
-/* Mint → cyan → blue text that slowly shifts, used for headline highlights. */
+/*
+ * 4. Reusable classes.
+ * Mint → cyan → blue text that slowly shifts, used for headline highlights.
+ * The gradient is painted as background and clipped to the letter shapes.
+ */
 .text-gradient {
   background: linear-gradient(100deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent-2), var(--accent));
   background-size: 300% 100%;
@@ -160,7 +220,11 @@ body {
   50% { background-position: 100% 50%; }
 }
 
-/* Fixed aurora behind every page: three soft blobs plus a faded grid. */
+/*
+ * Fixed aurora behind every page (the <div class="aurora"> in layout.tsx):
+ * ::before draws three soft colour blobs that drift slowly, ::after a faint
+ * grid that fades out towards the bottom.
+ */
 .aurora {
   position: fixed;
   inset: 0;
@@ -194,86 +258,99 @@ body {
 }
 
 /*
- * Card with a hairline border and a soft spotlight that follows the pointer
- * (Effects.tsx sets --mx/--my). `.is-link` cards also lift on hover; plain
- * cards don't, so nothing looks clickable that isn't.
+ * Reusable cards and buttons live in Tailwind's "components" layer, so a
+ * page can still adjust them with utility classes for one screen size
+ * (e.g. `max-sm:border-0` turns a card into a plain list row on phones).
  */
-.glow-card {
-  position: relative;
-  isolation: isolate;
-  border-radius: 1.5rem;
-  background: linear-gradient(180deg, var(--card-from), var(--card-to));
-  border: 1px solid var(--border);
-  box-shadow: 0 10px 40px -24px var(--shadow);
-  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-}
-.glow-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  opacity: 0;
-  background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);
-  transition: opacity 0.35s ease;
-}
-.glow-card:hover::before {
-  opacity: 1;
-}
-.glow-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
-}
-.glow-card.is-link:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 60px -20px color-mix(in srgb, var(--accent) 40%, transparent);
-}
+@layer components {
+  /*
+   * Card with a hairline border and a soft spotlight that follows the pointer
+   * (Effects.tsx sets --mx/--my). `.is-link` cards also lift on hover; plain
+   * cards don't, so nothing looks clickable that isn't.
+   */
+  .glow-card {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, var(--card-from), var(--card-to));
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 40px -24px var(--shadow);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+  /* The spotlight: a soft circle centred on the pointer (--mx/--my), shown on hover. */
+  .glow-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);
+    transition: opacity 0.35s ease;
+  }
+  .glow-card:hover::before {
+    opacity: 1;
+  }
+  .glow-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .glow-card.is-link:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px -20px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
 
-/* Primary button: bright gradient with a light sweep on hover. */
-.btn-primary {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  background: linear-gradient(100deg, #34e3a0, #22d3ee);
-  color: #04120d;
-  box-shadow: 0 10px 40px -12px rgb(52 227 160 / 0.6);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-primary::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
-  transform: translateX(-120%);
-  transition: transform 0.7s ease;
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 50px -10px rgb(34 211 238 / 0.7);
-}
-.btn-primary:hover::after {
-  transform: translateX(120%);
-}
-.btn-primary:active,
-.btn-ghost:active {
-  transform: scale(0.97);
-}
+  /* Primary button: bright gradient with a light sweep on hover. */
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(100deg, #34e3a0, #22d3ee);
+    color: #04120d;
+    box-shadow: 0 10px 40px -12px rgb(52 227 160 / 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  /* The light sweep: a bright stripe parked off the left edge that slides across on hover. */
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 50px -10px rgb(34 211 238 / 0.7);
+  }
+  .btn-primary:hover::after {
+    transform: translateX(120%);
+  }
+  /* Both buttons shrink a little while pressed. */
+  .btn-primary:active,
+  .btn-ghost:active {
+    transform: scale(0.97);
+  }
 
-/* Secondary button. */
-.btn-ghost {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  backdrop-filter: blur(12px);
-  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
-}
-.btn-ghost:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
-  transform: translateY(-2px);
+  /* Secondary button: see-through "glass" with a border that lights up on hover. */
+  .btn-ghost {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+  }
+  .btn-ghost:hover {
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    transform: translateY(-2px);
+  }
 }
 
 /*
- * Scroll reveal. Only hidden once JS is running (`html.js`, set by the
- * inline script), so content is always visible to crawlers and without JS.
+ * Scroll reveal. Elements with `data-reveal` start hidden and slide up into
+ * view when Effects.tsx adds `is-visible`. They are only hidden once JS is
+ * running (`html.js`, set by THEME_SCRIPT in layout.tsx), so content is always
+ * visible to crawlers and without JS. `--delay` (set per element in the
+ * pages) staggers items so they appear one after another.
  */
 .js [data-reveal]:not(.is-visible) {
   opacity: 0;
@@ -290,20 +367,24 @@ body {
 }
 
 /*
- * Solar system on the home page (SolarSystem.tsx). Each app sits at a fixed
- * point on its ring (--start); the inner wrapper turns back by the same angle
- * so icons stay upright. Apps float and pulse in place; only small light dots
- * travel along the rings. With reduced motion everything rests in place.
+ * Solar system on the home page (SolarSystem.tsx). Each product sits at a
+ * fixed point on its ring (--start); the inner wrapper turns back by the same
+ * angle so icons stay upright. Products float and pulse in place; only small
+ * light dots travel along the rings. With reduced motion everything rests in place.
  */
+/* Turns the ring wrapper so the product (drawn at the top) lands at its angle. */
 .orbit-ring {
   transform: rotate(var(--start, 0deg));
 }
+/* Turns the icon back the same amount, so it isn't tilted. */
 .orbit-upright {
   transform: rotate(calc(-1 * var(--start, 0deg)));
 }
+/* Spins a whole ring layer, carrying its light dot round; --duration = seconds per lap. */
 .orbit-dot {
   animation: orbit-dot var(--duration, 30s) linear infinite;
 }
+/* Gentle up-and-down float, and an expanding ring; --bob-delay offsets each product. */
 .planet-bob {
   animation: planet-bob 5s ease-in-out infinite;
   animation-delay: var(--bob-delay, 0s);
@@ -324,7 +405,42 @@ body {
   100% { opacity: 0; transform: scale(1.55); }
 }
 
-/* Edge fade for the feature marquee. */
+/*
+ * App feel on phones and tablets.
+ * - .app-carousel: a row you swipe sideways that snaps card by card (like an
+ *   app store). It is used below the `md` width; from `md` up the same
+ *   element becomes a normal grid (see the md: classes where it is used).
+ * - Touch screens get no hover lifts (a tap would leave a card "stuck" up)
+ *   and a quick press-down effect instead.
+ */
+.app-carousel {
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.app-carousel::-webkit-scrollbar {
+  display: none;
+}
+.app-carousel > * {
+  scroll-snap-align: start;
+}
+@media (hover: none) {
+  .glow-card.is-link:hover,
+  .btn-primary:hover,
+  .btn-ghost:hover {
+    transform: none;
+  }
+  .glow-card.is-link:active {
+    transform: scale(0.98);
+  }
+}
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Marquees (FeatureMarquee, TechMarquee): fade out at both edges, pause on hover. */
 .marquee-mask {
   mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
@@ -332,6 +448,10 @@ body {
   animation-play-state: paused;
 }
 
+/*
+ * 5. Reduced motion. Visitors who turn on "reduce motion" in their system
+ * settings get no animations or transitions, and reveal items show at once.
+ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;

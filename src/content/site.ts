@@ -1,4 +1,8 @@
-/** Company-wide details used in the header, footer and metadata. */
+/**
+ * COMPANY DETAILS used all over the site: header, footer, page titles,
+ * search-engine data and the contact page. Change them here and every page
+ * updates.
+ */
 export const site = {
   name: "Jaxen Labs",
   url: "https://jaxenlabs.github.io",

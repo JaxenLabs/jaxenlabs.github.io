@@ -2,11 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 import type { AppInfo } from "@/content/types";
 
-/** A large app tile on the home page; the whole card opens the app's page. */
+/**
+ * A large product tile in the "Products" section of the home page. The whole
+ * card is one link to the product's page (`/<slug>/`). It shows the icon,
+ * name, an optional "Client project" badge, the tagline and the first three
+ * features as small chips.
+ *
+ * Used by: src/app/page.tsx
+ */
 export function AppCard({ app }: { app: AppInfo }) {
   return (
+    // `is-link` makes the card lift on hover (see .glow-card in globals.css);
+    // `group` lets children react to hovering anywhere on the card.
     <Link href={`/${app.slug}/`} className="glow-card is-link group flex h-full flex-col overflow-hidden p-6 sm:p-8">
+      {/* Blurred colour blob in the corner that brightens on hover */}
       <div className="pointer-events-none absolute -top-24 -right-24 size-64 rounded-full bg-accent/10 blur-3xl transition-colors duration-500 group-hover:bg-accent-2/25" />
+      {/* Top row: product icon and a round arrow badge */}
       <div className="flex items-start justify-between gap-4">
         <Image
           src={app.iconSrc}
@@ -27,7 +38,9 @@ export function AppCard({ app }: { app: AppInfo }) {
           Client project · {app.client}
         </p>
       )}
+      {/* flex-1 lets the tagline take spare height, so cards in a row line up */}
       <p className="mt-2 flex-1 text-muted">{app.tagline}</p>
+      {/* First three features as chips */}
       <div className="mt-6 flex flex-wrap gap-2">
         {app.features.slice(0, 3).map((f) => (
           <span key={f.title} className="rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted">

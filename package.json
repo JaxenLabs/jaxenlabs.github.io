@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve out",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run build",
+    "update:play": "node scripts/update-play-listings.mjs"
   },
   "dependencies": {
     "next": "16.4.3",
@@ -19,6 +22,8 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.4.3",
     "tailwindcss": "4.3.3",
     "typescript": "^5.9"
   }

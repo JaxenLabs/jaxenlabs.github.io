@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-/** 404 page; GitHub Pages serves the exported `404.html` for unknown paths. */
+/**
+ * The "Page not found" (404) page. Next.js uses `not-found.tsx` for any URL
+ * that has no page, and for pages that call `notFound()`. In the static
+ * export it becomes `404.html`, which GitHub Pages shows for unknown paths.
+ */
 export default function NotFound() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-28 text-center sm:px-6">

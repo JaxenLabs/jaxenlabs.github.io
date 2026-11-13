@@ -1,28 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
-/** The theme on screen now: the chosen one, or the system's. */
+/** Name of the event we fire when the visitor switches theme, so every toggle on the page updates. */
+const THEME_EVENT = "themechange";
+const SYSTEM_LIGHT = "(prefers-color-scheme: light)";
+
+/** The theme on screen now: the one the visitor chose, or the system's. */
 function currentTheme(): Theme {
-  const set = document.documentElement.dataset.theme;
-  if (set === "light" || set === "dark") return set;
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  const chosen = document.documentElement.dataset.theme;
+  if (chosen === "light" || chosen === "dark") return chosen;
+  return window.matchMedia(SYSTEM_LIGHT).matches ? "light" : "dark";
 }
 
-/** Sun/moon button that switches light and dark mode and remembers the choice. */
-export function ThemeToggle({ className = "" }: { className?: string }) {
-  // Unknown until mounted; the server cannot know the visitor's theme.
-  const [theme, setTheme] = useState<Theme | null>(null);
+/**
+ * Tells React when the theme may have changed: when the visitor switches it,
+ * or when the device's own light/dark setting changes. Returns a clean-up.
+ */
+function subscribe(onChange: () => void) {
+  const media = window.matchMedia(SYSTEM_LIGHT);
+  media.addEventListener("change", onChange);
+  window.addEventListener(THEME_EVENT, onChange);
+  return () => {
+    media.removeEventListener("change", onChange);
+    window.removeEventListener(THEME_EVENT, onChange);
+  };
+}
 
-  useEffect(() => {
-    setTheme(currentTheme());
-    const media = window.matchMedia("(prefers-color-scheme: light)");
-    const onChange = () => setTheme(currentTheme());
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
+/**
+ * Sun/moon button that switches light and dark mode and remembers the choice
+ * in localStorage (the browser's small per-site storage). Setting
+ * `data-theme` on <html> swaps the colour tokens in globals.css; the inline
+ * script in layout.tsx re-applies the saved choice on the next visit.
+ *
+ * "use client": this runs in the browser because it reacts to clicks and
+ * reads localStorage and the system colour setting.
+ *
+ * Used by: src/components/SiteHeader.tsx
+ */
+export function ThemeToggle({ className = "" }: { className?: string }) {
+  // useSyncExternalStore is React's safe way to read something that lives
+  // outside React (here: the page's theme). On the server, and while React
+  // first takes over the page, it uses the third argument (null = "unknown"),
+  // so the pre-built HTML always matches; then it switches to the real theme.
+  const theme = useSyncExternalStore<Theme | null>(subscribe, currentTheme, () => null);
 
   function toggle() {
     const next: Theme = currentTheme() === "dark" ? "light" : "dark";
@@ -32,10 +55,12 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     } catch {
       // Private mode or blocked storage: the switch still works for this visit.
     }
-    setTheme(next);
+    window.dispatchEvent(new Event(THEME_EVENT));
   }
 
-  // Before mount, show the icon for the system theme without animating.
+  // While unknown (null), assume dark (the default theme). The HTML built ahead of
+  // time must match what the browser first draws, or React complains during
+  // "hydration" (the step where React takes over the pre-built HTML).
   const isDark = theme === null ? true : theme === "dark";
   return (
     <button
@@ -45,6 +70,8 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       title={isDark ? "Light mode" : "Dark mode"}
       className={`relative grid size-10 cursor-pointer place-items-center overflow-hidden rounded-xl border border-border bg-surface-strong text-muted transition-colors hover:border-accent/50 hover:text-accent ${className}`}
     >
+      {/* Both icons are always drawn on top of each other; one spins and shrinks
+          away while the other grows in. Sun shows in dark mode (click for light). */}
       {/* Sun */}
       <svg
         viewBox="0 0 24 24"

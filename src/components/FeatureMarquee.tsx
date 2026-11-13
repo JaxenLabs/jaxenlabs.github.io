@@ -2,10 +2,19 @@ import Link from "next/link";
 import type { AppInfo } from "@/content/types";
 import { Icon } from "./Icon";
 
-/** An endless strip of every app's features; each chip opens its app. Pauses on hover. */
+/**
+ * An endless, scrolling strip of every product's features; each chip opens
+ * its product's page. Pauses on hover (see .marquee-mask in globals.css).
+ *
+ * Used by: src/app/page.tsx
+ */
 export function FeatureMarquee({ apps }: { apps: AppInfo[] }) {
+  // One flat list of chips: every feature of every product, remembering its product.
   const chips = apps.flatMap((app) => app.features.map((f) => ({ ...f, app })));
-  // Rendered twice so the -50% loop is seamless; the copy is hidden from screen readers.
+  // The list is rendered twice side by side. The `marquee` animation slides
+  // the strip left by exactly half (-50%), at which point the second copy sits
+  // where the first started, so the loop restarts without a visible jump.
+  // The second copy is hidden from screen readers and skipped by the Tab key.
   return (
     <div className="marquee-mask overflow-hidden py-2">
       <div className="flex w-max animate-marquee gap-3">

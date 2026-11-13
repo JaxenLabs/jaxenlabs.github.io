@@ -1,9 +1,12 @@
 import type { IconName } from "./types";
 
 /**
- * What the home page says about JaxenLabs as a software company. Every
- * capability and tool here is one our shipped products actually use, so
- * nothing is claimed that the products don't show.
+ * HOME PAGE TEXT about Jaxen Labs as a software company: the three values,
+ * "What we engineer", the scrolling tech list and "How we work".
+ *
+ * Rule for editing: every capability and tool listed here must be one our
+ * shipped products really use, so the site never claims something the
+ * products don't show.
  */
 
 /** The three commitments in the company statement. */
