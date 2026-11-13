@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { AppInfo } from "@/content/types";
 
-/** A large app tile on the studio home page; the whole card opens the app's page. */
+/** A large app tile on the home page; the whole card opens the app's page. */
 export function AppCard({ app }: { app: AppInfo }) {
   return (
     <Link href={`/${app.slug}/`} className="glow-card is-link group flex h-full flex-col overflow-hidden p-6 sm:p-8">
@@ -22,6 +22,11 @@ export function AppCard({ app }: { app: AppInfo }) {
         </span>
       </div>
       <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight">{app.name}</h3>
+      {app.client && (
+        <p className="mt-2 w-fit rounded-full border border-accent-3/30 bg-accent-3/10 px-2.5 py-0.5 text-xs font-medium text-accent-3">
+          Client project · {app.client}
+        </p>
+      )}
       <p className="mt-2 flex-1 text-muted">{app.tagline}</p>
       <div className="mt-6 flex flex-wrap gap-2">
         {app.features.slice(0, 3).map((f) => (

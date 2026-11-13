@@ -35,7 +35,7 @@ export function SiteFooter() {
             </a>
           </div>
         </div>
-        <ul className="grid gap-8 sm:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {apps.map((app) => (
             <li key={app.slug}>
               <Link href={`/${app.slug}/`} className="group inline-flex items-center gap-2.5 font-medium">
@@ -43,9 +43,12 @@ export function SiteFooter() {
                 <span className="transition-colors group-hover:text-accent">{app.name}</span>
               </Link>
               <div className="mt-3 flex flex-col gap-2 text-sm text-muted">
-                <Link href={`/${app.slug}/privacy-policy/`} className="w-fit transition-colors hover:text-text">
-                  Privacy Policy
-                </Link>
+                {app.privacy && (
+                  <Link href={`/${app.slug}/privacy-policy/`} className="w-fit transition-colors hover:text-text">
+                    Privacy Policy
+                  </Link>
+                )}
+                {app.client && <span>Client project</span>}
                 {app.terms && (
                   <Link href={`/${app.slug}/terms/`} className="w-fit transition-colors hover:text-text">
                     Terms

@@ -56,7 +56,7 @@ export function organizationJsonLd() {
         "@id": `${site.url}/#organization`,
         name: site.name,
         url: `${site.url}/`,
-        logo: `${site.url}/icon.svg`,
+        logo: `${site.url}/logo.png`,
         email: site.contactEmail,
         description: site.description,
         sameAs: [site.facebookUrl],
@@ -89,7 +89,10 @@ export function appJsonLd(app: AppInfo) {
         ...(app.playStoreUrl && { installUrl: app.playStoreUrl, downloadUrl: app.playStoreUrl }),
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
         featureList: app.features.map((f) => f.title),
-        publisher: { "@id": `${site.url}/#organization`, "@type": "Organization", name: site.name },
+        // Our own products are published by JaxenLabs; client work by its owner on Google Play.
+        publisher: app.client
+          ? { "@type": "Organization", name: app.store.developer }
+          : { "@id": `${site.url}/#organization`, "@type": "Organization", name: site.name },
       },
       breadcrumbJsonLd([{ name: app.name, path: `/${app.slug}/` }]),
     ],

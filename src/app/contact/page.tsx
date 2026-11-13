@@ -9,7 +9,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Contact",
-  description: `Contact ${site.name} by email or on Facebook for app support, privacy questions and feedback.`,
+  description: `Contact ${site.name}, a software company, by email or on Facebook about projects, product support and privacy questions.`,
   path: "/contact/",
 });
 
@@ -25,7 +25,7 @@ export default function ContactPage() {
           Say <span className="text-gradient">hello.</span>
         </h1>
         <p className="mx-auto mt-5 max-w-lg text-lg text-muted">
-          Need help with an app, have a privacy question or an idea? We would love to hear from you.
+          Have a project in mind, need help with one of our products, or a privacy question? We would love to hear from you.
         </p>
       </div>
 
@@ -34,9 +34,9 @@ export default function ContactPage() {
       </div>
 
       <section className="mt-20">
-        <h2 data-reveal className="font-display text-2xl font-bold tracking-tight">App policies</h2>
+        <h2 data-reveal className="font-display text-2xl font-bold tracking-tight">Product policies</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {apps.map((app, i) => (
+          {apps.filter((app) => app.privacy).map((app, i) => (
             <div key={app.slug} data-reveal style={{ "--delay": `${i * 100}ms` } as CSSProperties} className="glow-card p-5">
               <Link href={`/${app.slug}/`} className="group flex items-center gap-3">
                 <Image src={app.iconSrc} alt="" width={48} height={48} className="size-12 rounded-xl transition-transform duration-300 group-hover:scale-110" />

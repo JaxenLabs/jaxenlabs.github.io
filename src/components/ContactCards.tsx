@@ -19,7 +19,7 @@ export function ContactCards() {
           </svg>
         </span>
         <h3 className="mt-5 font-display text-xl font-semibold">Email us</h3>
-        <p className="mt-1.5 text-sm text-muted">Support, privacy questions or feedback about any app. We reply as soon as we can.</p>
+        <p className="mt-1.5 text-sm text-muted">Projects, partnerships, product support or privacy questions. We reply as soon as we can.</p>
         <p className="mt-5 font-display text-lg font-medium break-all text-accent select-all">{site.contactEmail}</p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <a href={`mailto:${site.contactEmail}`} className="btn-primary inline-flex h-12 items-center gap-2 rounded-2xl px-5 font-semibold">
@@ -34,7 +34,7 @@ export function ContactCards() {
           <FacebookIcon className="size-6" />
         </span>
         <h3 className="mt-5 font-display text-xl font-semibold">Follow on Facebook</h3>
-        <p className="mt-1.5 text-sm text-muted">News about our apps, updates and what we are building next.</p>
+        <p className="mt-1.5 text-sm text-muted">Company news, product updates and what we are building next.</p>
         <p className="mt-5 inline-flex items-center gap-2 text-sm text-muted">
           <Icon name="spark" className="size-4 text-accent" />
           facebook.com · Jaxen Labs

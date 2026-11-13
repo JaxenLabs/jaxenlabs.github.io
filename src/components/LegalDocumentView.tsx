@@ -23,7 +23,7 @@ export function LegalDocumentView({ app, doc }: { app: AppInfo; doc: LegalDocume
   const otherDoc =
     doc === app.privacy
       ? app.terms && { href: `/${app.slug}/terms/`, title: app.terms.title }
-      : { href: `/${app.slug}/privacy-policy/`, title: app.privacy.title };
+      : app.privacy && { href: `/${app.slug}/privacy-policy/`, title: app.privacy.title };
 
   return (
     <div className="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14">

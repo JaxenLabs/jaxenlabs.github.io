@@ -51,13 +51,35 @@ export type IconName =
   | "calendar"
   | "counter"
   | "clock"
-  | "heart";
+  | "heart"
+  | "code"
+  | "layers"
+  | "cpu"
+  | "globe"
+  | "rocket"
+  | "pen";
 
 /** A short feature card on an app's home page. */
 export interface AppFeature {
   title: string;
   text: string;
   icon: IconName;
+}
+
+/** An app's Google Play listing, word for word (`apps/<slug>/store.ts`). */
+export interface StoreListing {
+  /** Title on Google Play, e.g. "JaxScan: PDF, OCR, Cam Scanner". */
+  title: string;
+  /** The 80-character short description. */
+  shortDescription: string;
+  /** Developer name shown on Google Play. */
+  developer: string;
+  /** Opening paragraphs of the full description. */
+  intro: string[];
+  /** A heading the listing puts above all its sections, if any. */
+  sectionsTitle?: string;
+  /** The listing's headed sections, as paragraphs and bullet lists. */
+  sections: LegalSection[];
 }
 
 /** Everything the site knows about one app. Add a new app by adding one of these. */
@@ -73,17 +95,24 @@ export interface AppInfo {
   iconSrc: string;
   /** Store link, if the app is live. */
   playStoreUrl?: string;
+  /** Download count as Google Play shows it, e.g. "5K+". Update it from the listing now and then. */
+  downloads: string;
+  /** For client work: who it was built for. Client products have no policy pages here. */
+  client?: string;
   /** schema.org application category, e.g. "FinanceApplication". */
   category: string;
   /** Extra search words for this app's pages. */
   keywords: string[];
   features: AppFeature[];
+  /** The Google Play listing. */
+  store: StoreListing;
   /**
    * Why the app asks for Google user data (shown on the app home page).
    * Google's OAuth review checks that the home page explains this.
    */
   googleDataUse?: { title: string; paragraphs: string[] };
-  privacy: LegalDocument;
+  /** Privacy Policy, for our own products. Without it there is no `/<slug>/privacy-policy/` page. */
+  privacy?: LegalDocument;
   /** Terms, if the app has them. Without them there is no `/<slug>/terms/` page. */
   terms?: LegalDocument;
 }

@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/", 1),
     ...apps.flatMap((app) => [
       page(`/${app.slug}/`, 0.9),
-      page(`/${app.slug}/privacy-policy/`, 0.6),
+      ...(app.privacy ? [page(`/${app.slug}/privacy-policy/`, 0.6)] : []),
       ...(app.terms ? [page(`/${app.slug}/terms/`, 0.5)] : []),
     ]),
     page("/contact/", 0.5),

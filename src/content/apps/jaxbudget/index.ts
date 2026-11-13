@@ -1,16 +1,17 @@
 import type { AppInfo } from "@/content/types";
 import { privacy } from "./privacy";
+import { store } from "./store";
 import { terms } from "./terms";
 
 /** JaxBudget: `/jaxbudget/`. */
 export const jaxbudget: AppInfo = {
   slug: "jaxbudget",
   name: "JaxBudget",
-  tagline: "Expenses, budgets and subscriptions, kept on your phone.",
-  description:
-    "JaxBudget is an offline-first personal finance app. Record expenses and income, set budgets, track subscriptions and get renewal reminders. No account, no ads, and your ledger never leaves your device unless you back it up yourself.",
+  tagline: store.shortDescription,
+  description: store.intro.join(" "),
   iconSrc: "/jaxbudget/icon.png",
   playStoreUrl: "https://play.google.com/store/apps/details?id=com.jaxenlabs.jaxbudget",
+  downloads: "10+",
   category: "FinanceApplication",
   keywords: ["budget app", "expense tracker", "offline budget", "subscription tracker", "personal finance", "private money manager"],
   features: [
@@ -53,6 +54,7 @@ export const jaxbudget: AppInfo = {
       "Backups go straight from your phone to your own Drive. JaxBudget has no servers and we never receive, store or share your Google data or your backups. You can disconnect at any time, and delete the backups from Google Drive (Settings > Manage apps > JaxBudget > Delete hidden app data).",
     ],
   },
+  store,
   privacy,
   terms,
 };

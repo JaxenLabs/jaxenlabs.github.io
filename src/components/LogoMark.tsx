@@ -1,11 +1,14 @@
-/** The JaxenLabs "J" on a mint-to-blue gradient tile. */
+import Image from "next/image";
+
+/** The JaxenLabs logo mark (public/logo.png, transparent). */
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
-    <span
-      aria-hidden
-      className={`relative grid place-items-center rounded-xl bg-linear-135 from-accent via-accent-2 to-accent-3 font-display font-bold text-[#04120d] shadow-[0_0_24px_-4px_rgb(52_227_160/0.7)] ${className}`}
-    >
-      J
-    </span>
+    <Image
+      src="/logo.png"
+      alt=""
+      width={72}
+      height={72}
+      className={`shrink-0 object-contain drop-shadow-[0_4px_12px_rgb(0_90_255/0.35)] ${className}`}
+    />
   );
 }

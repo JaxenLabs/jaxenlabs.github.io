@@ -1,0 +1,46 @@
+import { p, ul, type StoreListing } from "@/content/types";
+
+/**
+ * The Google Play listing, word for word (title, short description and full
+ * description), fetched from the live store page. Update it when the
+ * listing changes.
+ */
+export const store: StoreListing = {
+  title: "Smart Ummah: Prayer Qibla Dua",
+  shortDescription: "Muslim prayer times, Qibla compass, Quran, Dua, Dhikr, Tasbeeh & Names of Allah.",
+  developer: "Jaxen Labs",
+  intro: [
+    "Experience a smarter way to stay connected to your faith with Smart Ummah: Muslim Prayer App.",
+    "Smart Ummah is a fast, lightweight, and completely ad-free Islamic utility designed to help you manage your daily worship with ease. Whether you are at home or traveling, get precise prayer times and a complete set of spiritual tools in one clean, modern experience.",
+  ],
+  sections: [
+    {
+      heading: "Core Features for Daily Worship:",
+      blocks: [
+        ul(
+          "**Accurate Prayer Times:** Get precise Salah timings based on your current location. Features customizable notification alerts and support for both Hanafi and Shafi'i calculation methods (Madhabs).",
+          "**Smart Qibla Finder:** A highly accurate, smooth, and interactive Qibla compass to help you find the exact direction of the Kaaba from anywhere in the world.",
+          "**Digital Tasbeeh Counter:** A beautiful Tasbih counter for your daily Dhikr. Set customizable targets (33, 99, 100) with preset phrases like SubhanAllah, Alhamdulillah, and Allahu Akbar.",
+          "**Authentic Dua & Dhikr Library:** Access a comprehensive collection of daily supplications and morning/evening Dhikr for protection, success, and peace of mind.",
+          "**Asmaul Husna (99 Names of Allah):** Explore the 99 Names of Allah with their original Arabic script, English/Bangla transliterations, audio pronunciations, and deep meanings.",
+          "**Daily Islamic Content:** Stay inspired throughout your day with authentic Hadiths, Quranic verses, and beautiful Islamic reminders.",
+          "**Voice-Powered Search:** Use smart voice commands to quickly find Surahs, locate Masjids, or navigate the app—perfect for hands-free use.",
+          "**Nearby Mosque Finder:** Quickly locate the nearest masjids and prayer spaces using integrated map navigation.",
+        ),
+      ],
+    },
+    {
+      heading: "Why Choose Smart Ummah?",
+      blocks: [
+        ul(
+          "**100% Ad-Free Experience:** Focus entirely on your worship, Namaz, and Dhikr without any distracting, intrusive, or inappropriate advertisements.",
+          "**Strict Privacy Focused:** Your privacy is our priority. Your location data is used only for local prayer calculations and is never stored, shared, or sold.",
+          "**English & Bangla Support:** Fully localized for both English and Bangla-speaking users, including localized Bengali digits, script, and translations.",
+          "**Lightweight & Battery Efficient:** Built for high performance. The app is optimized to run smoothly and save battery, even on older Android devices.",
+        ),
+        p("Join the global Ummah and elevate your spiritual journey today."),
+        p("Download Smart Ummah and make your daily worship effortless."),
+      ],
+    },
+  ],
+};

@@ -1,16 +1,17 @@
 import type { AppInfo } from "@/content/types";
 import { privacy } from "./privacy";
+import { store } from "./store";
 import { terms } from "./terms";
 
 /** JaxScan: `/jaxscan/`. Wording follows the Play Store listing (playstore_description.md). */
 export const jaxscan: AppInfo = {
   slug: "jaxscan",
   name: "JaxScan",
-  tagline: "A private document scanner that keeps every scan on your phone.",
-  description:
-    "JaxScan is a private document scanner and PDF scanner app that keeps every scan on your phone. Scan documents to PDF in seconds, extract text with offline OCR, sign and edit PDFs, and scan QR codes — with no account, no sign-up, no ads and no cloud upload.",
+  tagline: store.shortDescription,
+  description: store.intro.join(" "),
   iconSrc: "/jaxscan/icon.png",
   playStoreUrl: "https://play.google.com/store/apps/details?id=com.jaxenlabs.scanai",
+  downloads: "50+",
   category: "BusinessApplication",
   keywords: ["document scanner", "PDF scanner", "offline OCR", "scan to PDF", "QR code scanner", "private scanner app"],
   features: [
@@ -45,6 +46,7 @@ export const jaxscan: AppInfo = {
       text: "QR, Aztec, Data Matrix, PDF417, EAN, UPC and Code 128/39, live or from saved photos.",
     },
   ],
+  store,
   privacy,
   terms,
 };

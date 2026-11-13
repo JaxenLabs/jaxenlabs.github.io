@@ -1,10 +1,10 @@
-/** Studio-wide details used in the header, footer and metadata. */
+/** Company-wide details used in the header, footer and metadata. */
 export const site = {
   name: "JaxenLabs",
   url: "https://jaxenlabs.github.io",
-  tagline: "Small, private, offline-first apps.",
+  tagline: "Reliable, scalable, innovative software.",
   description:
-    "JaxenLabs builds calm, privacy-first mobile apps that keep your data on your device.",
+    "A technology and software company committed to engineering reliable, scalable, and innovative digital solutions for a connected world.",
   contactEmail: "jaxenlabs.dev@gmail.com",
   facebookUrl: "https://www.facebook.com/profile.php?id=61594146698206",
 } as const;

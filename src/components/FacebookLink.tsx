@@ -19,7 +19,7 @@ export function FacebookLink({ className = "" }: { className?: string }) {
       aria-label={`${site.name} on Facebook`}
       className={`grid size-10 place-items-center rounded-xl border border-border bg-surface-strong text-muted transition-colors hover:border-[#1877f2]/60 hover:text-[#4b93ff] ${className}`}
     >
-      <FacebookIcon className="size-[18px]" />
+      <FacebookIcon className="size-[1.125rem]" />
     </a>
   );
 }

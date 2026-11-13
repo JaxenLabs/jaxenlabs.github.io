@@ -1,0 +1,111 @@
+import { p, ul, type StoreListing } from "@/content/types";
+
+/**
+ * The Google Play listing, word for word (title, short description and full
+ * description), fetched from the live store page. Update it when the
+ * listing changes.
+ */
+export const store: StoreListing = {
+  title: "Jax Budget: Expense Tracker",
+  shortDescription: "Private expense tracker, budget planner, money, bill & subscription manager",
+  developer: "Jaxen Labs",
+  intro: [
+    "Take full control of your money with Jax Budget, the smart, offline-first personal finance app designed to help you track expenses, manage category budgets, organize subscriptions, and save money effortlessly.",
+    "Unlike traditional finance apps that keep your financial data on their servers, Jax Budget stores your ledger on your phone. No accounts to create, no bank logins required, and no ads. Your transactions, budgets and subscriptions are never sent to us.",
+  ],
+  sectionsTitle: "🌟 WHY YOU'LL LOVE JAXBUDGET",
+  sections: [
+    {
+      heading: "📊 1. SMART EXPENSE TRACKER & MONEY MANAGER",
+      blocks: [
+        ul(
+          "Quickly record daily expenses and income in seconds.",
+          "Categorize spending (Groceries, Utilities, Rent, Entertainment and more), or create your own categories, to see exactly where your money goes.",
+          "Works in your own currency.",
+        ),
+      ],
+    },
+    {
+      heading: "🎯 2. CATEGORY BUDGET PLANNER",
+      blocks: [
+        ul(
+          "Set monthly spending limits for individual categories or your entire ledger.",
+          "Real-time progress bars show how much budget you have left before you overspend.",
+          "Receive visual budget warnings before hitting your monthly cap.",
+        ),
+      ],
+    },
+    {
+      heading: "🔔 3. SUBSCRIPTION TRACKER & RENEWAL REMINDERS",
+      blocks: [
+        ul(
+          "Never get surprised by unwanted auto-renewals again!",
+          "Track all active monthly and annual subscriptions in one clear dashboard.",
+          "A renewal calendar shows what's coming up and when.",
+          "Get local reminders before each renewal, so a free trial never turns into a surprise charge.",
+        ),
+      ],
+    },
+    {
+      heading: "📷 4. INSTANT RECEIPT SCANNER (CAMERA OCR) - Pro",
+      blocks: [
+        ul(
+          "Snap a picture of any physical receipt to extract purchase totals and merchants automatically.",
+          "Uses private, on-device text recognition (OCR). Your receipt photos are processed right on your phone, deleted right after, and never uploaded.",
+        ),
+      ],
+    },
+    {
+      heading: "🎙️ 5. HANDS-FREE VOICE SCAN",
+      blocks: [
+        ul(
+          "Simply speak your purchase aloud (e.g., \"Spent 15 dollars on coffee\") and let JaxBudget turn your speech into text to fill in your expense form instantly.",
+        ),
+      ],
+    },
+    {
+      heading: "💡 6. PRIVATE MONEY COACH & INSIGHTS",
+      blocks: [
+        ul(
+          "Visual category charts and monthly income vs. expense breakdowns.",
+          "Get personalized financial tips and insights worked out on your phone, strictly from your own numbers and goals.",
+        ),
+      ],
+    },
+    {
+      heading: "🔒 7. PRIVATE & SECURE",
+      blocks: [
+        ul(
+          "**Offline-First:** All ledger records stay inside your device's private storage.",
+          "**App Lock:** Protect your ledger with fingerprint, face unlock, PIN, or pattern lock.",
+          "**Offline Backups:** Export CSV, Excel (XLSX), or PDF reports anytime, or save an offline ZIP backup file directly to your chosen folder.",
+        ),
+      ],
+    },
+    {
+      heading: "☁️ 8. GOOGLE DRIVE BACKUP - Pro",
+      blocks: [
+        ul(
+          "Back up your ledger to your own Google Drive with one tap.",
+          "Saved in a private app folder that only Jax Budget can open. We never see your files.",
+          "Your last 5 backups are kept, so you can restore any of them on a new phone.",
+          "Restoring from Drive is always free, even if Pro ends.",
+        ),
+      ],
+    },
+    {
+      heading: "⭐ 9. JAX BUDGET PRO",
+      blocks: [
+        p("The free plan covers everyday budgeting. Upgrade to Pro to unlock:"),
+        ul(
+          "Unlimited subscriptions, category budgets and custom categories",
+          "Your full Insights history and every Money Coach tip",
+          "Receipt scanning with the camera",
+          "Google Drive backup",
+        ),
+        p("Choose Monthly, Yearly (with a free trial) or a one-time Lifetime purchase. Logging, Voice Scan, offline backup, restore and CSV export always stay free, and if Pro ends, nothing you saved is ever deleted."),
+        p("Anonymous crash reports and usage statistics help us fix bugs. They never include your amounts, payee names or notes. See our Privacy Policy for details."),
+      ],
+    },
+  ],
+};

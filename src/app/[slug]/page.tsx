@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { AppIconHero } from "@/components/AppIconHero";
 import { Icon } from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
+import { StoreListingView } from "@/components/StoreListingView";
 import { apps, getApp } from "@/content/apps";
 import { appJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -42,7 +43,7 @@ export default async function AppPage({ params }: Props) {
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-12 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.2fr_1fr]">
         <div className="animate-rise">
           <nav aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-sm text-muted">
+            <ol className="flex flex-wrap items-center gap-2 text-sm text-muted">
               <li>
                 <Link href="/" className="transition-colors hover:text-accent">
                   Home
@@ -50,8 +51,8 @@ export default async function AppPage({ params }: Props) {
               </li>
               <li aria-hidden>/</li>
               <li>
-                <Link href="/#apps" className="transition-colors hover:text-accent">
-                  Apps
+                <Link href="/#products" className="transition-colors hover:text-accent">
+                  Products
                 </Link>
               </li>
               <li aria-hidden>/</li>
@@ -60,9 +61,18 @@ export default async function AppPage({ params }: Props) {
               </li>
             </ol>
           </nav>
-          <h1 className="mt-6 font-display text-5xl font-bold tracking-tight sm:text-7xl">
+          {app.client && (
+            <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-accent-3/30 bg-accent-3/10 px-3 py-1 text-xs font-medium text-accent-3">
+              <Icon name="spark" className="size-3.5" />
+              Client project · Built for {app.client}
+            </p>
+          )}
+          <h1 className="mt-5 font-display text-5xl font-bold tracking-tight sm:text-7xl">
             <span className="text-gradient">{app.name}</span>
           </h1>
+          <p className="mt-3 text-sm font-medium tracking-wide text-muted">
+            {app.store.title} · <span className="text-text">{app.downloads}</span> downloads on Google Play
+          </p>
           <p className="mt-4 font-display text-xl text-text sm:text-2xl">{app.tagline}</p>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{app.description}</p>
 
@@ -83,12 +93,14 @@ export default async function AppPage({ params }: Props) {
                 </span>
               </a>
             )}
-            <Link
-              href={`/${app.slug}/privacy-policy/`}
-              className="btn-ghost inline-flex h-14 items-center rounded-2xl px-5 font-medium"
-            >
-              Privacy Policy
-            </Link>
+            {app.privacy && (
+              <Link
+                href={`/${app.slug}/privacy-policy/`}
+                className="btn-ghost inline-flex h-14 items-center rounded-2xl px-5 font-medium"
+              >
+                Privacy Policy
+              </Link>
+            )}
             {app.terms && (
               <Link href={`/${app.slug}/terms/`} className="btn-ghost inline-flex h-14 items-center rounded-2xl px-5 font-medium">
                 Terms
@@ -118,6 +130,8 @@ export default async function AppPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      <StoreListingView app={app} />
 
       {app.googleDataUse && (
         <section className="mx-auto max-w-6xl px-4 pt-24 sm:px-6">

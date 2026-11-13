@@ -9,12 +9,12 @@ type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return apps.map((app) => ({ slug: app.slug }));
+  return apps.filter((app) => app.privacy).map((app) => ({ slug: app.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const app = getApp((await params).slug);
-  if (!app) return {};
+  if (!app?.privacy) return {};
   return pageMetadata({
     title: `${app.name} Privacy Policy`,
     description: app.privacy.intro ?? `How ${app.name} handles your data. ${app.tagline}`,
@@ -26,6 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /** `/<slug>/privacy-policy/`. */
 export default async function PrivacyPolicyPage({ params }: Props) {
   const app = getApp((await params).slug);
-  if (!app) notFound();
+  if (!app?.privacy) notFound();
   return <LegalDocumentView app={app} doc={app.privacy} />;
 }

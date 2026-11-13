@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 type MenuApp = { slug: string; name: string; iconSrc: string; tagline: string };
 
-/** Hamburger menu for small screens: every app, contact and Facebook. */
+/** Hamburger menu for small screens: every product, contact and Facebook. */
 export function MobileMenu({ apps, facebookUrl }: { apps: MenuApp[]; facebookUrl: string }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -43,7 +43,7 @@ export function MobileMenu({ apps, facebookUrl }: { apps: MenuApp[]; facebookUrl
           id="mobile-menu"
           className="absolute inset-x-0 top-full mt-2 animate-pop overflow-hidden rounded-2xl border border-border bg-bg p-3 shadow-[0_20px_60px_-20px_var(--shadow)] backdrop-blur-xl"
         >
-          <p className="px-3 pt-1 pb-2 text-xs font-semibold tracking-[0.2em] text-accent uppercase">Apps</p>
+          <p className="px-3 pt-1 pb-2 text-xs font-semibold tracking-[0.2em] text-accent uppercase">Products</p>
           <ul className="grid grid-cols-[minmax(0,1fr)] gap-1">
             {apps.map((app) => (
               <li key={app.slug}>

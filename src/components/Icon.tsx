@@ -21,6 +21,12 @@ const PATHS: Record<IconName, string> = {
   counter: "M12 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-5 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm10 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM5 13a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm14 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-7 4v4",
   clock: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v4l3 2",
   heart: "M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z",
+  code: "m8 8-4 4 4 4m8-8 4 4-4 4M14 4l-4 16",
+  layers: "m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5",
+  cpu: "M8 8h8v8H8V8ZM5 5h14v14H5V5Zm4-3v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3",
+  globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-9-9h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3Z",
+  rocket: "M14 4c3-1 6-1 6-1s0 3-1 6l-6 6-4-4 5-7Zm-5 7-4 1-2 3 4 1m6-1-1 4-3 2-1-4m6-8.5a1.5 1.5 0 1 0 0 .01",
+  pen: "m15 4 5 5L9 20H4v-5L15 4Zm-3 3 5 5",
 };
 
 export function Icon({ name, className = "size-5" }: { name: IconName; className?: string }) {

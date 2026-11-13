@@ -1,0 +1,106 @@
+import { p, ul, type StoreListing } from "@/content/types";
+
+/**
+ * The Google Play listing, word for word (title, short description and full
+ * description), fetched from the live store page. Update it when the
+ * listing changes.
+ */
+export const store: StoreListing = {
+  title: "JaxScan: PDF, OCR, Cam Scanner",
+  shortDescription: "Private offline PDF scanner: scan documents, OCR text, sign PDFs & scan QR codes",
+  developer: "Jaxen Labs",
+  intro: [
+    "JaxScan is a private document scanner and PDF scanner app that keeps every scan on your phone. Scan documents to PDF in seconds, extract text with offline OCR, sign and edit PDFs, and scan QR codes — with no account, no sign-up, no ads and no cloud upload.",
+  ],
+  sections: [
+    {
+      heading: "🔒 PRIVATE & SECURE — YOUR DATA STAYS ON YOUR DEVICE",
+      blocks: [
+        ul(
+          "Your documents never leave your phone — scans, text and signatures are stored privately in the app and never uploaded.",
+          "**100% offline scanner:** scanning, OCR, QR and every PDF tool work on your phone, even in airplane mode.",
+          "Documents are excluded from Android cloud backup and phone-to-phone transfer.",
+          "**Offline backup:** save your whole library as one ZIP to a folder you choose and restore it any time — no cloud.",
+          "App lock with fingerprint, face or screen lock. While it's on, JaxScan is hidden in recent apps and screenshots are blocked.",
+          "No access to your contacts, location or storage — you pick every file you import.",
+        ),
+      ],
+    },
+    {
+      heading: "📄 DOCUMENT SCANNER — SCAN TO PDF",
+      blocks: [
+        ul(
+          "**One camera, 6 modes:** Scan, Extract Text, ID Card, Business Card, Sign and Erase Object — plus a live QR code scanner.",
+          "10 filters, including scanner-grade Document, Whiteboard and B&W modes that lift shadows and turn paper white.",
+          "Crop and rotate any page.",
+          "Batch scan a whole stack into one PDF, then review every page before saving.",
+          "Import photos, PDFs, text, Word and PowerPoint files — or share into JaxScan from any app.",
+        ),
+      ],
+    },
+    {
+      heading: "🔍 OCR TEXT SCANNER, BUSINESS CARD & ID CARD SCANNER",
+      blocks: [
+        ul(
+          "Extract text from images with on-device OCR: English, Spanish, French, German and other Latin-script languages, Hindi, Marathi, Nepali, Chinese, Japanese and Korean. Copy, share or save as .txt.",
+          "Digital PDFs give their real text, word for word.",
+          "**Business card scanner:** save name, company, phones, email, website and address to your contacts.",
+          "**ID card scanner:** front and back on one printable page, like a photocopy.",
+        ),
+      ],
+    },
+    {
+      heading: "🛠 PDF EDITOR & CONVERTER",
+      blocks: [
+        ul(
+          "Image to PDF, image to Word, image to PowerPoint — and PDF to image, PDF to Word, PDF to PPT and PDF to text.",
+          "Merge PDF, split PDF by tapping the pages you want, reorder or delete pages.",
+          "Compress PDF at low, medium or high compression.",
+          "**Add page numbers:** real, searchable text in six positions and five styles or your own.",
+          "Watermark PDFs or photos with your own text.",
+          "Print any PDF.",
+        ),
+      ],
+    },
+    {
+      heading: "✍️ SIGN PDF, REDACT & PASSWORD PROTECT",
+      blocks: [
+        ul(
+          "**Sign documents:** draw your signature once and reuse it; add text, dates, checkmarks and highlights.",
+          "**Redact:** black out names, numbers and addresses — burned into the page for good.",
+          "Lock PDF with AES-256 password protection, or unlock a PDF whose password you know.",
+          "**Erase Object:** brush over anything unwanted in a photo and it fills the gap in.",
+        ),
+      ],
+    },
+    {
+      heading: "🔳 QR CODE & BARCODE SCANNER",
+      blocks: [
+        ul(
+          "QR, Aztec, Data Matrix, PDF417, EAN, UPC and Code 128/39 — live or from saved photos.",
+          "One tap to join Wi-Fi, open links, call, text, email, get directions, add a contact or event.",
+          "Full scan history.",
+        ),
+      ],
+    },
+    {
+      heading: "📤 EXPORT, SHARE & ORGANISE",
+      blocks: [
+        ul(
+          "Save as PDF, JPG, PNG, Word, PowerPoint, TXT or ZIP in four qualities: Original, High 300 dpi, Standard 200 dpi, Compressed 120 dpi.",
+          "Share to any app or save to any folder.",
+          "Colour-coded folders, Starred and All, grid or list view, light and dark themes.",
+          "Search by name or by the text inside your scans; select many at once.",
+        ),
+      ],
+    },
+    {
+      heading: "⭐ FREE & PRO",
+      blocks: [
+        p("Scanning, filters, PDF and image export, QR scanning, Image to PDF, PDF to Image, Reorder, Print, restoring a backup and your whole library are free. Extract Text, ID Card, Sign & Redact and Erase Object include free runs, and Merge, Split and Compress a free try each."),
+        p("JaxScan Pro unlocks unlimited runs, Word, PowerPoint, TXT and ZIP export, High quality, Business Card, Lock & Unlock PDF, Watermark, Page Numbers, Word and PowerPoint import, library backup and exports without the JaxScan stamp. Monthly, 6-month or yearly plans via Google Play — cancel anytime."),
+        p("The secure offline scanner app for students, freelancers and small businesses."),
+      ],
+    },
+  ],
+};
