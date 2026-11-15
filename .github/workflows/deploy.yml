@@ -48,6 +48,10 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy out --project-name=${{ env.CLOUDFLARE_PROJECT }} --branch=${{ github.ref_name }} --commit-dirty=true
+      - name: Tell search engines about the pages (IndexNow)
+        if: github.ref_name == 'main'
+        continue-on-error: true
+        run: node scripts/indexnow.mjs out
       - if: github.ref_name == 'main'
         uses: actions/upload-pages-artifact@v3
         with:
