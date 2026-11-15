@@ -1,20 +1,35 @@
-# Builds the static site and publishes it to GitHub Pages on every push to main.
-# One-time setup: repo Settings > Pages > Source: "GitHub Actions".
-name: Deploy to GitHub Pages
+# Publishes the site to Cloudflare Pages (https://jaxenlabs.pages.dev) and,
+# from main, to GitHub Pages (https://jaxenlabs.github.io).
+#
+# Work happens on the develop branch: every push to develop is built, checked
+# and published as a preview (https://develop.jaxenlabs.pages.dev).
+# Merging develop into main and pushing main publishes the live site.
+#
+# GitHub Pages stays the main address because JaxBudget's home page, privacy
+# policy and terms URLs on jaxenlabs.github.io are registered in Google Cloud.
+#
+# Needs two repository secrets: CLOUDFLARE_API_TOKEN (a Cloudflare API token
+# with Account > Cloudflare Pages > Edit) and CLOUDFLARE_ACCOUNT_ID.
+# GitHub Pages: repo Settings > Pages > Source: "GitHub Actions".
+name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  deployments: write
 
 concurrency:
-  group: pages
+  group: deploy-${{ github.ref_name }}
   cancel-in-progress: true
+
+env:
+  CLOUDFLARE_PROJECT: jaxenlabs
 
 jobs:
   build:
@@ -26,12 +41,20 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - run: npm run check
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy out --project-name=${{ env.CLOUDFLARE_PROJECT }} --branch=${{ github.ref_name }} --commit-dirty=true
+      - if: github.ref_name == 'main'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: out
 
-  deploy:
+  github-pages:
+    if: github.ref_name == 'main'
     needs: build
     runs-on: ubuntu-latest
     environment:

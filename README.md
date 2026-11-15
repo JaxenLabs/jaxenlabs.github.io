@@ -4,7 +4,7 @@ The website of **Jaxen Labs**, a technology and software company. It presents th
 
 - **Live site:** https://jaxenlabs.github.io
 - **Built with:** [Next.js](https://nextjs.org) 16, [React](https://react.dev) 19, [Tailwind CSS](https://tailwindcss.com) 4 and [TypeScript](https://www.typescriptlang.org)
-- **Hosted on:** GitHub Pages (free). Every push to `main` publishes the site automatically.
+- **Hosted on:** GitHub Pages and Cloudflare Pages (https://jaxenlabs.pages.dev), both free. Work on `develop` (each push publishes a preview at https://develop.jaxenlabs.pages.dev); merging into `main` and pushing publishes the live site on both.
 
 New to the project? Read sections 1 to 4 in order. Afterwards, sections 5 and 6 are recipes and rules you can come back to.
 
